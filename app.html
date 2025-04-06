@@ -203,7 +203,7 @@
         const blob = new Blob([pdfBytes], { type: 'application/pdf' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = 'extrahovane-obrazky.pdf';
+        link.download = 'extrahovane.pdf';
         link.click();
       };
       outputDiv.appendChild(downloadPdfBtn);
