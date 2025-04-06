@@ -81,7 +81,7 @@
 <body>
   <div class="container">
     <h1>Extrahuj obrázky z PDF</h1>
-    <p>Vyber PDF súbor a my automaticky extrahujeme všetky vložené obrázky alebo vygenerujeme náhľady strán.</p>
+    <p>Vyber PDF súbor a my automaticky vygenerujeme náhľady strán.</p>
 
     <label for="fileInput" class="upload-btn">📂 Nahrať PDF</label>
     <input type="file" id="fileInput" accept="application/pdf" />
@@ -174,7 +174,7 @@
 
           const fallbackNote = document.createElement('div');
           fallbackNote.className = 'fallback-note';
-          fallbackNote.textContent = '⚠️ Na tejto strane neboli nájdené vložené obrázky – použitý náhľad strany.';
+          
 
           const imageContainer = document.createElement('div');
           imageContainer.classList.add('image-container');

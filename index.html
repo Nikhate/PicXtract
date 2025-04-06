@@ -15,29 +15,42 @@
     }
 
     body {
-     background-color: #0d0d0d;
-    color: white;
-    min-height: 100vh;
-    display: flex;
-    flex-direction: column;
-    justify-content: center;
-    align-items: center;
-    padding: 40px 20px;
-    background-image: radial-gradient(circle at top left, rgba(255, 102, 0, 0.2), transparent 70%),
-                    radial-gradient(circle at bottom right, rgba(255, 102, 0, 0.15), transparent 70%);
-    text-align: center; /* Pridanie text-align pre stredový text */
-}
+      background-color: #0d0d0d;
+      color: white;
+      min-height: 100vh;
+      display: flex;
+      flex-direction: column;
+      justify-content: center;
+      align-items: center;
+      padding: 40px 20px;
+      background-image: radial-gradient(circle at top left, rgba(255, 102, 0, 0.2), transparent 70%),
+                        radial-gradient(circle at bottom right, rgba(255, 102, 0, 0.15), transparent 70%);
+      text-align: center;
+    }
 
+    header {
+      position: absolute;
+      top: -5px;
+      left: 20px;
+      display: flex;
+      align-items: center;
+    }
+
+    header img {
+      max-width: 150px; /* Zvýšenie veľkosti loga */
+      margin-right: 10px;
+    }
 
     h1 {
       font-size: 3rem;
       font-weight: 800;
-      text-align: center;
+      text-align: left;
       margin-bottom: 20px;
       background: linear-gradient(90deg, #ff6600, #ffaa00);
       -webkit-background-clip: text;
       background-clip: text;
       -webkit-text-fill-color: transparent;
+      margin-left: 130px;
     }
 
     p.tagline {
@@ -129,6 +142,10 @@
   </style>
 </head>
 <body>
+  <header>
+    <img src="/html/logo33.png" alt="PicXtract logo">
+  </header>
+
   <main>
     <h1>Vytvor obrázky z PDF strán</h1>
     <p class="tagline">Moderný nástroj na vytváranie obrázkov zo strán PDF dokumentov – bezpečne, rýchlo a priamo v prehliadači. Automatické generovanie náhľadov strán ako obrázkov.</p>
@@ -160,7 +177,7 @@
   </main>
 
   <footer>
-    &copy; 2025 VytvorObrazok.sk – Tvoje PDF, tvoje dáta, tvoj pokoj.
+    &copy; Tvoje PDF, tvoje dáta, tvoj pokoj.
   </footer>
 </body>
 </html>
