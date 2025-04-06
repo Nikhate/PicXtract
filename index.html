@@ -1,0 +1,166 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>VytvorObrazok.sk</title>
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      font-family: 'Inter', sans-serif;
+    }
+
+    body {
+     background-color: #0d0d0d;
+    color: white;
+    min-height: 100vh;
+    display: flex;
+    flex-direction: column;
+    justify-content: center;
+    align-items: center;
+    padding: 40px 20px;
+    background-image: radial-gradient(circle at top left, rgba(255, 102, 0, 0.2), transparent 70%),
+                    radial-gradient(circle at bottom right, rgba(255, 102, 0, 0.15), transparent 70%);
+    text-align: center; /* Pridanie text-align pre stredový text */
+}
+
+
+    h1 {
+      font-size: 3rem;
+      font-weight: 800;
+      text-align: center;
+      margin-bottom: 20px;
+      background: linear-gradient(90deg, #ff6600, #ffaa00);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    p.tagline {
+      font-size: 1.25rem;
+      color: #aaa;
+      max-width: 700px;
+      text-align: center;
+      margin-bottom: 40px;
+    }
+
+    .cta-buttons {
+      display: flex;
+      gap: 20px;
+      flex-wrap: wrap;
+      justify-content: center;
+    }
+
+    .btn {
+      background: linear-gradient(90deg, #ff6600, #ff8800);
+      padding: 14px 28px;
+      border: none;
+      border-radius: 8px;
+      font-size: 1rem;
+      font-weight: 600;
+      cursor: pointer;
+      color: #fff;
+      box-shadow: 0 0 20px rgba(255, 102, 0, 0.5);
+      transition: transform 0.3s ease, box-shadow 0.3s ease;
+      text-decoration: none;
+    }
+
+    .btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 30px rgba(255, 102, 0, 0.7);
+    }
+
+    .features {
+      margin-top: 60px;
+      max-width: 800px;
+      font-size: 1rem;
+      line-height: 1.6;
+      color: #ccc;
+      text-align: center;
+    }
+
+    .reviews {
+      margin-top: 80px;
+      max-width: 900px;
+      display: grid;
+      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
+      gap: 30px;
+      padding: 0 10px;
+    }
+
+    .review {
+      background-color: #1a1a1a;
+      border: 1px solid rgba(255, 102, 0, 0.4);
+      border-radius: 10px;
+      padding: 20px;
+      color: #eee;
+      box-shadow: 0 0 10px rgba(255, 102, 0, 0.2);
+    }
+
+    .review p {
+      font-style: italic;
+      margin-bottom: 10px;
+    }
+
+    .review span {
+      font-weight: bold;
+      color: #ffaa00;
+    }
+
+    footer {
+      margin-top: 60px;
+      color: #555;
+      font-size: 0.9rem;
+      text-align: center;
+    }
+
+    @media (max-width: 600px) {
+      h1 {
+        font-size: 2.2rem;
+      }
+      p.tagline {
+        font-size: 1rem;
+      }
+    }
+  </style>
+</head>
+<body>
+  <main>
+    <h1>Vytvor obrázky z PDF strán</h1>
+    <p class="tagline">Moderný nástroj na vytváranie obrázkov zo strán PDF dokumentov – bezpečne, rýchlo a priamo v prehliadači. Automatické generovanie náhľadov strán ako obrázkov.</p>
+
+    <div class="cta-buttons">
+      <a href="app.html" class="btn">Začať vytvárať obrázky</a>
+    </div>
+
+    <div class="features">
+      <p>✔️ Automaticky generuje obrázky zo strán PDF</p>
+      <p>✔️ Možnosť stiahnuť si obrázky strán alebo nový PDF s obrázkami</p>
+      <p>✔️ Všetko prebieha v prehliadači, tvoje dáta ostávajú v bezpečí</p>
+    </div>
+
+    <div class="reviews">
+      <div class="review">
+        <p>„Skvelý nástroj! Potrebovala som generovať obrázky z PDF dokumentu a fungovalo to perfektne.“</p>
+        <span>— Jana K., grafička</span>
+      </div>
+      <div class="review">
+        <p>„Rýchle, jednoduché a bez potreby čohokoľvek inštalovať. 10/10.“</p>
+        <span>— Michal P., projektový manažér</span>
+      </div>
+      <div class="review">
+        <p>„Použil som to na prednášku – perfektný spôsob ako získať obrázky zo starých PDF slajdov.“</p>
+        <span>— Tomáš B., vysokoškolský pedagóg</span>
+      </div>
+    </div>
+  </main>
+
+  <footer>
+    &copy; 2025 VytvorObrazok.sk – Tvoje PDF, tvoje dáta, tvoj pokoj.
+  </footer>
+</body>
+</html>

@@ -1,0 +1,264 @@
+<!DOCTYPE html>
+<html lang="sk">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Extrahuj obrázky z PDF</title>
+  <link rel="stylesheet" href="style.css">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.jsdelivr.net/npm/pdf-lib/dist/pdf-lib.min.js"></script>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/pdf.js/2.10.377/pdf.min.js"></script>
+  <style>
+    body {
+      background-color: #0d0d0d;
+      color: white;
+      font-family: 'Inter', sans-serif;
+    }
+    h1 {
+      font-size: 2rem;
+      background: linear-gradient(90deg, #ff6600, #ffaa00);
+      -webkit-background-clip: text;
+      background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+    p {
+      color: #aaa;
+    }
+    .upload-btn {
+      background: linear-gradient(90deg, #ff6600, #ff8800);
+      border: none;
+      color: white;
+      padding: 12px 20px;
+      border-radius: 6px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      font-weight: 600;
+      box-shadow: 0 0 15px rgba(255, 102, 0, 0.4);
+      text-decoration: none;
+    }
+    .upload-btn:hover {
+      transform: scale(1.05);
+      box-shadow: 0 0 25px rgba(255, 102, 0, 0.6);
+    }
+    #output {
+      margin-top: 30px;
+    }
+    .image-container a {
+      color: #ff8800;
+    }
+    .fixed-buttons {
+      position: fixed;
+      bottom: 20px;
+      right: 20px;
+    }
+    .icon-button {
+      background: #1a1a1a;
+      border: 1px solid #ff6600;
+      color: #ff6600;
+      padding: 12px;
+      border-radius: 50%;
+      cursor: pointer;
+      font-size: 18px;
+      transition: all 0.3s ease;
+      text-decoration: none;
+    }
+    .icon-button:hover {
+      background: #ff6600;
+      color: white;
+      box-shadow: 0 0 15px rgba(255, 102, 0, 0.6);
+    }
+    .fallback-note {
+      font-size: 0.9rem;
+      color: #888;
+      margin-top: 5px;
+    }
+    input[type="file"] {
+      display: none;
+    }
+  </style>
+</head>
+<body>
+  <div class="container">
+    <h1>Extrahuj obrázky z PDF</h1>
+    <p>Vyber PDF súbor a my automaticky extrahujeme všetky vložené obrázky alebo vygenerujeme náhľady strán.</p>
+
+    <label for="fileInput" class="upload-btn">📂 Nahrať PDF</label>
+    <input type="file" id="fileInput" accept="application/pdf" />
+
+    <div id="output"></div>
+  </div>
+
+  <div class="fixed-buttons">
+    <a href="index.html" class="icon-button" title="Domov">🏠</a>
+  </div>
+
+  <script>
+    const fileInput = document.getElementById('fileInput');
+    const outputDiv = document.getElementById('output');
+    let newPdf = null;
+
+    fileInput.addEventListener('change', async function(event) {
+      const file = event.target.files[0];
+      if (!file || file.type !== 'application/pdf') {
+        alert('Prosím, vyberte PDF súbor.');
+        return;
+      }
+
+      const arrayBuffer = await file.arrayBuffer();
+      const pdfDoc = await PDFLib.PDFDocument.load(arrayBuffer);
+      newPdf = await PDFLib.PDFDocument.create();
+      const pdfjsDoc = await pdfjsLib.getDocument({ data: arrayBuffer }).promise;
+
+      outputDiv.innerHTML = '';
+
+      for (let i = 0; i < pdfDoc.getPageCount(); i++) {
+        const pageIndex = i;
+        const pageNumber = i + 1;
+        const images = await extractImagesFromPage(pdfDoc, pageIndex);
+
+        if (images.length > 0) {
+          for (let img of images) {
+            const imageUrl = URL.createObjectURL(new Blob([img.bytes], { type: img.mimeType }));
+
+            const imgElement = document.createElement('img');
+            imgElement.src = imageUrl;
+            imgElement.alt = `Obrázok zo strany ${pageNumber}`;
+
+            const downloadLink = document.createElement('a');
+            downloadLink.href = imageUrl;
+            downloadLink.download = `obrazok-${pageNumber}.jpg`;
+            downloadLink.textContent = `⬇️ Stiahnuť obrázok (strana ${pageNumber})`;
+
+            const imageContainer = document.createElement('div');
+            imageContainer.classList.add('image-container');
+            imageContainer.appendChild(imgElement);
+            imageContainer.appendChild(downloadLink);
+            outputDiv.appendChild(imageContainer);
+
+            try {
+              const embeddedImg = img.mimeType === 'image/png'
+                ? await newPdf.embedPng(img.bytes)
+                : await newPdf.embedJpg(img.bytes);
+
+              const imgPage = newPdf.addPage([embeddedImg.width, embeddedImg.height]);
+              imgPage.drawImage(embeddedImg, {
+                x: 0,
+                y: 0,
+                width: embeddedImg.width,
+                height: embeddedImg.height,
+              });
+            } catch (err) {
+              console.warn('⚠️ Nepodarilo sa vložiť obrázok:', err);
+            }
+          }
+        } else {
+          const page = await pdfjsDoc.getPage(pageNumber);
+          const viewport = page.getViewport({ scale: 2 });
+          const canvas = document.createElement('canvas');
+          const context = canvas.getContext('2d');
+          canvas.width = viewport.width;
+          canvas.height = viewport.height;
+
+          await page.render({ canvasContext: context, viewport }).promise;
+          const imgDataUrl = canvas.toDataURL('image/png');
+
+          const imgElement = document.createElement('img');
+          imgElement.src = imgDataUrl;
+          imgElement.alt = `Náhľad strany ${pageNumber}`;
+
+          const downloadLink = document.createElement('a');
+          downloadLink.href = imgDataUrl;
+          downloadLink.download = `strana-${pageNumber}.png`;
+          downloadLink.textContent = `⬇️ Stiahnuť stránku ${pageNumber}`;
+
+          const fallbackNote = document.createElement('div');
+          fallbackNote.className = 'fallback-note';
+          fallbackNote.textContent = '⚠️ Na tejto strane neboli nájdené vložené obrázky – použitý náhľad strany.';
+
+          const imageContainer = document.createElement('div');
+          imageContainer.classList.add('image-container');
+          imageContainer.appendChild(imgElement);
+          imageContainer.appendChild(downloadLink);
+          imageContainer.appendChild(fallbackNote);
+          outputDiv.appendChild(imageContainer);
+
+          const pngBytes = await fetch(imgDataUrl).then(res => res.arrayBuffer());
+          const embeddedImg = await newPdf.embedPng(pngBytes);
+          const pageNew = newPdf.addPage([embeddedImg.width, embeddedImg.height]);
+          pageNew.drawImage(embeddedImg, {
+            x: 0,
+            y: 0,
+            width: embeddedImg.width,
+            height: embeddedImg.height,
+          });
+        }
+      }
+
+      const downloadPdfBtn = document.createElement('button');
+      downloadPdfBtn.className = 'upload-btn';
+      downloadPdfBtn.textContent = '📄 Stiahnuť nové PDF s obrázkami';
+      downloadPdfBtn.onclick = async () => {
+        const pdfBytes = await newPdf.save();
+        const blob = new Blob([pdfBytes], { type: 'application/pdf' });
+        const link = document.createElement('a');
+        link.href = URL.createObjectURL(blob);
+        link.download = 'extrahovane-obrazky.pdf';
+        link.click();
+      };
+      outputDiv.appendChild(downloadPdfBtn);
+    });
+
+    async function extractImagesFromPage(pdfDoc, pageIndex) {
+      const images = [];
+      const page = pdfDoc.getPages()[pageIndex];
+      const resources = page.node.Resources();
+
+      // Check if Resources exist
+      if (!resources) {
+        console.warn(`⚠️ Resources missing for page ${pageIndex + 1}`);
+        return images;
+      }
+
+      const xObjectDict = resources.lookup(PDFLib.PDFName.of('XObject')) || PDFLib.PDFDict.withContext(pdfDoc.context);
+
+      // Check if XObject exists
+      if (!xObjectDict || xObjectDict.size === 0) {
+        console.warn(`⚠️ No XObject found for page ${pageIndex + 1}`);
+        return images;
+      }
+
+      for (const [key, val] of xObjectDict.entries()) {
+        const obj = pdfDoc.context.lookup(val);
+        const subtype = obj?.dict?.get(PDFLib.PDFName.of('Subtype'));
+
+        // Skip non-image objects
+        if (subtype?.name !== 'Image') continue;
+
+        const filter = obj.dict.get(PDFLib.PDFName.of('Filter'));
+        let mimeType;
+
+        // Handle different filters
+        if (filter?.name === 'DCTDecode') mimeType = 'image/jpeg';
+        else if (filter?.name === 'FlateDecode') mimeType = 'image/png';
+        else if (filter?.name === 'JPXDecode') mimeType = 'image/jp2'; // JPEG2000
+        else {
+          console.warn(`⚠️ Unsupported filter ${filter?.name} for image on page ${pageIndex + 1}`);
+          continue;
+        }
+
+        const bytes = obj.getContents();
+
+        // Check if image data is valid
+        if (bytes && bytes.length > 0) {
+          images.push({ bytes, mimeType });
+        } else {
+          console.warn(`⚠️ Empty or invalid image data on page ${pageIndex + 1}`);
+        }
+      }
+
+      return images;
+    }
+  </script>
+</body>
+</html>
