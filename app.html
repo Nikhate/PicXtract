@@ -80,10 +80,10 @@
 </head>
 <body>
   <div class="container">
-    <h1>Extrahuj obrázky z PDF</h1>
-    <p>Vyber PDF súbor a my automaticky vygenerujeme náhľady strán.</p>
+    <h1>Create images from PDF</h1>
+    <p>Select a PDF file and we will automatically generate page previews.</p>
 
-    <label for="fileInput" class="upload-btn">📂 Nahrať PDF</label>
+    <label for="fileInput" class="upload-btn">📂 Choose PDF file</label>
     <input type="file" id="fileInput" accept="application/pdf" />
 
     <div id="output"></div>
@@ -101,7 +101,7 @@
     fileInput.addEventListener('change', async function(event) {
       const file = event.target.files[0];
       if (!file || file.type !== 'application/pdf') {
-        alert('Prosím, vyberte PDF súbor.');
+        alert('Choose PDF file!');
         return;
       }
 
@@ -127,8 +127,8 @@
 
             const downloadLink = document.createElement('a');
             downloadLink.href = imageUrl;
-            downloadLink.download = `obrazok-${pageNumber}.jpg`;
-            downloadLink.textContent = `⬇️ Stiahnuť obrázok (strana ${pageNumber})`;
+            downloadLink.download = `image-${pageNumber}.jpg`;
+            downloadLink.textContent = `⬇️ Download image (strana ${pageNumber})`;
 
             const imageContainer = document.createElement('div');
             imageContainer.classList.add('image-container');
