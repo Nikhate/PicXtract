@@ -1,189 +1,76 @@
 <!DOCTYPE html>
 <html lang="sk">
 <head>
-  <meta charset="UTF-8">
-  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>PicXtract</title>
-  <link rel="preconnect" href="https://fonts.googleapis.com">
   <link href="https://fonts.googleapis.com/css2?family=Inter:wght@400;600;800&display=swap" rel="stylesheet">
+  <script src="https://cdn.tailwindcss.com"></script>
   <style>
-    * {
-      margin: auto;
-      padding: 0;
-      box-sizing: border-box;
-      font-family: 'Inter', sans-serif;
-    } 
-
-    .headline 
-    {
-      margin-left: 160px;
-    }
-
     body {
-      background-color: #0d0d0d;
-      color: white;
-      min-height: 100vh;
-      display: flex;
-      flex-direction: column;
-      justify-content: center;
-      align-items: center;
-      padding: 40px 20px;
-      background-image: radial-gradient(circle at top left, rgba(255, 102, 0, 0.2), transparent 70%),
-                        radial-gradient(circle at bottom right, rgba(255, 102, 0, 0.15), transparent 70%);
-      text-align: center;
-    }
-
-    header {
-      position: absolute;
-      top: -5px;
-      left: 20px;
-      display: flex;
-      align-items: center;
-    }
-
-    header img {
-      max-width: 150px; /* Zvýšenie veľkosti loga */
-      margin-right: 10px;
-    }
-
-    h1 {
-      font-size: 3rem;
-      font-weight: 800;
-      text-align: left;
-      margin-bottom: 20px;
-      background: linear-gradient(90deg, #ff6600, #ffaa00);
-      -webkit-background-clip: text;
-      background-clip: text;
-      -webkit-text-fill-color: transparent;
-      margin-left: 130px;
-    }
-
-    p.tagline {
-      font-size: 1.25rem;
-      color: #aaa;
-      max-width: 700px;
-      text-align: center;
-      margin-bottom: 40px;
-      margin-left: 95px;
-    }
-
-    .cta-buttons {
-      display: flex;
-      gap: 20px;
-      flex-wrap: wrap;
-      justify-content: center;
-    }
-
-    .btn {
-      background: linear-gradient(90deg, #ff6600, #ff8800);
-      padding: 14px 28px;
-      border: none;
-      border-radius: 8px;
-      font-size: 1rem;
-      font-weight: 600;
-      cursor: pointer;
-      color: #fff;
-      box-shadow: 0 0 20px rgba(255, 102, 0, 0.5);
-      transition: transform 0.3s ease, box-shadow 0.3s ease;
-      text-decoration: none;
-    }
-
-    .btn:hover {
-      transform: scale(1.05);
-      box-shadow: 0 0 30px rgba(255, 102, 0, 0.7);
-    }
-
-    .features {
-      margin-top: 60px;
-      max-width: 800px;
-      font-size: 1rem;
-      line-height: 1.6;
-      color: #ccc;
-      text-align: center;
-    }
-
-    .reviews {
-      margin-top: 80px;
-      max-width: 900px;
-      display: grid;
-      grid-template-columns: repeat(auto-fit, minmax(250px, 1fr));
-      gap: 30px;
-      padding: 0 10px;
-    } 
-
-
-    .review {
-      background-color: #1a1a1a;
-      border: 1px solid rgba(255, 102, 0, 0.4);
-      border-radius: 10px;
-      padding: 20px;
-      color: #eee;
-      box-shadow: 0 0 10px rgba(255, 102, 0, 0.2);
-    }
-
-    .review p {
-      font-style: italic;
-      margin-bottom: 10px;
-    }
-
-    .review span {
-      font-weight: bold;
-      color: #ffaa00;
-    }
-
-    footer {
-      margin-top: 60px;
-      color: #555;
-      font-size: 0.9rem;
-      text-align: center;
-    }
-
-    @media (max-width: 600px) {
-      h1 {
-        font-size: 2.2rem;
-      }
-      p.tagline {
-        font-size: 1rem;
-      }
+      font-family: 'Inter', sans-serif;
     }
   </style>
 </head>
-<body>
-  <header>
-    <img src="logo33.png" alt="PicXtract logo">
+<body class="bg-[#0d0d0d] text-white min-h-screen flex flex-col justify-center items-center px-5 py-10 text-center bg-[radial-gradient(circle_at_top_left,rgba(255,102,0,0.2),transparent_70%),radial-gradient(circle_at_bottom_right,rgba(255,102,0,0.15),transparent_70%)]">
+
+  <header class="w-full flex justify-center sm:justify-start sm:absolute sm:top-[-5px] sm:left-5 mb-6 sm:mb-0">
+    <img src="logo33.png" alt="PicXtract logo" class="w-36 sm:w-[120px]">
   </header>
 
-  <main>
-    <h1 class="headline">Create images from PDF</h1>
-    <p class="tagline">Powerful tool for creating images from PDF document pages - safely, quickly and directly in the browser. Automatic generation of page previews as images.</p>
+  <h1 class="text-3xl sm:text-2.5xl md:text-2xl lg:text-[2.5rem] xl:text-3xl font-extrabold mb-5 bg-gradient-to-r from-orange-500 to-yellow-400 bg-clip-text text-transparent text-center mx-auto max-w-[90%]">
+    Create images from PDF
+  </h1>
+  
 
-    <div class="cta-buttons">
-      <a href="app.html" class="btn">Create Images</a>
+  <p class="text-lg sm:text-base text-[#aaa] max-w-[700px] mx-auto mb-10 px-2 text-center">
+    Powerful tool for creating images from PDF document pages - safely, quickly and directly in the browser. Automatic generation of page previews as images.
+  </p>
+
+    <div class="flex flex-wrap justify-center gap-5 flex-col sm:flex-row">
+      <a href="app.html" class="bg-gradient-to-r from-[#ff6600] to-[#ff8800] text-white font-semibold text-base px-7 py-3 rounded-lg shadow-lg hover:scale-105 transition-transform duration-300 hover:shadow-xl w-full sm:w-auto text-center">
+        Create Images
+      </a>
     </div>
 
-    <div class="features">
+    <div class="mt-16 max-w-[800px] text-[#ccc] text-base leading-relaxed mx-auto">
       <p>✔️ Automatically generates images from PDF pages</p>
       <p>✔️ Option to download page images or a new PDF with all images</p>
       <p>✔️ Everything happens in the browser, your data stays safe</p>
-    </div>
+    </div> 
 
-    <div class="reviews">
-      <div class="review">
-        <p>„Great tool! I needed to generate images from a PDF document and it worked perfectly.“</p>
-        <span>— Jana K., graphic designer</span>
+    <section class="mt-20 w-full max-w-5xl mx-auto px-4 text-center">
+      <h2 class="text-2xl sm:text-3xl font-extrabold mb-8 text-transparent bg-gradient-to-r from-orange-500 to-yellow-400 bg-clip-text">
+        HOW IT LOOKS LIKE
+      </h2>
+    
+        <!-- Second notebook -->
+        <div class="bg-gray-900 rounded-3xl shadow-2xl p-4 border-[6px] border-gray-700 w-full max-w-4xl">
+          <div class="bg-black rounded-xl overflow-hidden aspect-video">
+            <img src="screen2.png" alt="PDF preview screen" class="object-cover w-full h-full">
+          </div>
+        </div>
       </div>
-      <div class="review">
-        <p>„Quick, easy and no need to install anything. 10/10.“</p>
-        <span>— Michal P., project manager</span>
+    </section>
+    
+
+    <div class="mt-20 grid grid-cols-1 sm:grid-cols-2 lg:grid-cols-3 gap-6 max-w-[900px] mx-auto px-2">
+      <div class="bg-[#1a1a1a] border border-[#ff660066] rounded-xl p-5 text-[#eee] shadow-md">
+        <p class="italic mb-2">„Great tool! I needed to generate images from a PDF document and it worked perfectly.“</p>
+        <span class="font-bold text-[#ffaa00]">— Jana K., graphic designer</span>
       </div>
-      <div class="review">
-        <p>„I used this for a lecture - perfect way to get images from old PDF slides.“</p>
-        <span>— Tomas B., university teacher</span>
+      <div class="bg-[#1a1a1a] border border-[#ff660066] rounded-xl p-5 text-[#eee] shadow-md">
+        <p class="italic mb-2">„Quick, easy and no need to install anything. 10/10.“</p>
+        <span class="font-bold text-[#ffaa00]">— Michal P., project manager</span>
+      </div>
+      <div class="bg-[#1a1a1a] border border-[#ff660066] rounded-xl p-5 text-[#eee] shadow-md">
+        <p class="italic mb-2">„I used this for a lecture - perfect way to get images from old PDF slides.“</p>
+        <span class="font-bold text-[#ffaa00]">— Tomas B., university teacher</span>
       </div>
     </div>
   </main>
 
-  <footer>
+  <footer class="mt-16 text-[#555] text-sm text-center">
     &copy; Your PDF, Your data , Your peace.
   </footer>
 </body>
