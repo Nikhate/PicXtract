@@ -149,7 +149,7 @@
                 height: embeddedImg.height,
               });
             } catch (err) {
-              console.warn('⚠️ Nepodarilo sa vložiť obrázok:', err);
+              console.warn('⚠️ Cant add picture:', err);
             }
           }
         } else {
@@ -165,12 +165,12 @@
 
           const imgElement = document.createElement('img');
           imgElement.src = imgDataUrl;
-          imgElement.alt = `Náhľad strany ${pageNumber}`;
+          imgElement.alt = `Preview ${pageNumber}`;
 
           const downloadLink = document.createElement('a');
           downloadLink.href = imgDataUrl;
           downloadLink.download = `strana-${pageNumber}.png`;
-          downloadLink.textContent = `⬇️ Stiahnuť stránku ${pageNumber}`;
+          downloadLink.textContent = `⬇️ Download page ${pageNumber}`;
 
           const fallbackNote = document.createElement('div');
           fallbackNote.className = 'fallback-note';
@@ -197,13 +197,13 @@
 
       const downloadPdfBtn = document.createElement('button');
       downloadPdfBtn.className = 'upload-btn';
-      downloadPdfBtn.textContent = '📄 Stiahnuť nové PDF s obrázkami';
+      downloadPdfBtn.textContent = '📄 Download new PDF with pictures';
       downloadPdfBtn.onclick = async () => {
         const pdfBytes = await newPdf.save();
         const blob = new Blob([pdfBytes], { type: 'application/pdf' });
         const link = document.createElement('a');
         link.href = URL.createObjectURL(blob);
-        link.download = 'extrahovane-obrazky.pdf';
+        link.download = 'extraction.pdf';
         link.click();
       };
       outputDiv.appendChild(downloadPdfBtn);
